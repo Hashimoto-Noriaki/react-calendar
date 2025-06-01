@@ -2,24 +2,42 @@ import { ChangeEvent,useState } from 'react'
 import { PrimaryBtn } from '../atoms/PrimaryBtn'
 import { Input } from '../atoms/Input'
 import { loginInfoType } from '../../types/loginInfoType'
+import { login } from '../../api/login'
 
 export const LoginPage = () => {
-    const [loginInfo,setLoginInfo] = useState<loginInfoType>{
+    const [loginInfo,setLoginInfo] = useState<loginInfoType>({
         email:'',
         password:'',
-    }
+    })
+
+    const [errorMessage,setErrorMessage] = useState("")
 
     const changeLoginInfo = (event: ChangeEvent<HTMLInputElement>) => {
         const { name,value } = event.target
         setLoginInfo({...loginInfo,[name]: value})
     }
 
+    const handleLogin = (event: FormEvent<HTMLFormElement>)=> {
+        event.preventDefault()
+        setErrorMessage("")
+        try {
+            login(loginInfo)
+        } catch {
+            setErrorMessage("ログインに失敗しました。")
+        }
+    }
+
     return (
         <div className="w-[500px] bg-white rounded-lg shadow-lg py-10">
-            <form className="flex flex-col items-center justify-center gap-10">
+            <form className="flex flex-col items-center justify-center gap-10" onSubmit={handleLogin}>
                 <h1 className="text-3xl font-bold text-lime-800">
                     ログイン
                 </h1>
+                {errorMessage !== "" && (
+                    <div className="bg-red-500 text-white p-5 rounded-lg w-[80%]">
+                        {errorMessage}
+                    </div>
+                )}
                 <div className="w-[80%]">
                     <Input
                         name="email"
