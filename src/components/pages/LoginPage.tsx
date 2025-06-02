@@ -3,8 +3,10 @@ import { PrimaryBtn } from '../atoms/PrimaryBtn'
 import { Input } from '../atoms/Input'
 import { loginInfoType } from '../../types/loginInfoType'
 import { login } from '../../api/login'
+import { useLoginUser } from '../../hooks/useLoginUser'
 
 export const LoginPage = () => {
+    const { setLoginUser } = useLoginUser();
     const [loginInfo,setLoginInfo] = useState<loginInfoType>({
         email:'',
         password:'',
@@ -21,7 +23,8 @@ export const LoginPage = () => {
         event.preventDefault()
         setErrorMessage("")
         try {
-            login(loginInfo)
+            const resUser = login(loginInfo)
+            setLoginUser({id: resUser.id, name: resUser.name})
         } catch {
             setErrorMessage("ログインに失敗しました。")
         }
