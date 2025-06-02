@@ -1,13 +1,15 @@
-import { ChangeEvent,useState } from 'react'
+import { ChangeEvent,FormEvent,useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { PrimaryBtn } from '../atoms/PrimaryBtn'
 import { Input } from '../atoms/Input'
-import { loginInfoType } from '../../types/loginInfoType'
+import { LoginInfoType } from '../../types/loginInfoType'
 import { login } from '../../api/login'
 import { useLoginUser } from '../../hooks/useLoginUser'
 
 export const LoginPage = () => {
+    const navigate = useNavigate()
     const { setLoginUser } = useLoginUser();
-    const [loginInfo,setLoginInfo] = useState<loginInfoType>({
+    const [loginInfo,setLoginInfo] = useState<LoginInfoType>({
         email:'',
         password:'',
     })
@@ -25,6 +27,7 @@ export const LoginPage = () => {
         try {
             const resUser = login(loginInfo)
             setLoginUser({id: resUser.id, name: resUser.name})
+            navigate('/calendar')
         } catch {
             setErrorMessage("ログインに失敗しました。")
         }
@@ -56,7 +59,7 @@ export const LoginPage = () => {
                         type="password"
                         placeholder="パスワード"
                         value={loginInfo.password}
-                        onnchange={changeLoginInfo}
+                        onChange={changeLoginInfo}
                     />
                 </div>
                 <PrimaryBtn onClick={()=> null}>ログイン</PrimaryBtn>
