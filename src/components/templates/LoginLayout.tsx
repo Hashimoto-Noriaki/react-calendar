@@ -1,43 +1,44 @@
-import { Link,Outlet,useNavigate } from 'react-router-dom'
-import { useLoginUser } from "../hooks/useLoginUser";
+import { Link, Outlet, Navigate, useNavigate } from "react-router-dom";
+import { useLoginUser } from "../../hooks/useLoginUser";
 import { FaUser } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 
 export const LoginLayout = () => {
-    const navigate = useNavigate();
-    const { loginUser,setLoginUser } = useLoginUser();
+  const navigate = useNavigate();
+  const { loginUser, setLoginUser } = useLoginUser();
 
-    const handleLogout = ()=> {
-        setLoginUser({ id: 0, name: "" })
-        navigate('/login')
-    }
+  const handleLogout = () => {
+      setLoginUser({ id: 0, name: ""});
+      navigate("/login");
+  };
 
-    if(loginUser === 0) return<Navigate to='/login'/>
+    // 未ログインならログインページにリダイレクト
+    if (loginUser.id === 0) return <Navigate to="/login" />;
 
-    return (
+  return (
     <div className="relative">
-        <header className="bg-white leading-[50px] fixed top-0 right-0 left-0">
-            <div className="container mx-auto flex justify-between">
-                <p className="logo">
-                    <Link to="/">スケジュール管理App</Link>
-                </p>
-                <nav>
-                    <ul className="flex gap-5 text-lime-800">
-                        <li className="flex items-center">
-                            <FaUser/>
-                            {loginUser.name}
-                        </li>
-                        <li className="flex items-center">
-                            <MdLogout/>
-                            <a onClick={handleLogout}>ログアウト</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
-            <main className="pt-[50px] bg-gradient-to-r from-lime-100 to-lime-200 h-screen flex flex-col justify-center items-center">
-                <Outlet />
-            </main>
+      <header className="bg-white fixed top-0 left-0 right-0 leading-[50px]">
+        <div className="sm:container sm:mx-auto flex justify-between">
+          <p className="logo">
+            <Link to="/">スケジュール管理APP</Link>
+          </p>
+          <nav>
+            <ul className="flex justify-center gap-5 text-lime-800">
+              <li className="flex items-center gap-2">
+                <FaUser />
+                {loginUser.name}
+              </li>
+              <li className="flex items-center gap-2">
+                <MdLogout />
+                <button onClick={handleLogout}>ログアウト</button>
+              </li>
+            </ul>
+          </nav>
         </div>
-    )
-}
+      </header>
+      <main className="pt-[50px] bg-gradient-to-r from-lime-100 to-lime-200 h-screen flex justify-center items-center">
+        <Outlet />
+      </main>
+    </div>
+  );
+};
