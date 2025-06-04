@@ -11,6 +11,9 @@ export const LoginLayout = () => {
         setLoginUser({ id: 0, name: "" })
         navigate('/login')
     }
+
+    if(loginUser === 0) return<Navigate to='/login'/>
+
     return (
     <div className="relative">
         <header className="bg-white leading-[50px] fixed top-0 right-0 left-0">
