@@ -1,5 +1,7 @@
 import { Link,Outlet,useNavigate } from 'react-router-dom'
 import { useLoginUser } from "../hooks/useLoginUser";
+import { FaUser } from "react-icons/fa";
+import { MdLogout } from "react-icons/md";
 
 export const LoginLayout = () => {
     const navigate = useNavigate();
@@ -18,9 +20,13 @@ export const LoginLayout = () => {
                 </p>
                 <nav>
                     <ul className="flex gap-5 text-lime-800">
-                        <li className="flex items-center">{loginUser.name}</li>
                         <li className="flex items-center">
-                            <button onClick={handleLogout}>ログアウト</button>
+                            <FaUser/>
+                            {loginUser.name}
+                        </li>
+                        <li className="flex items-center">
+                            <MdLogout/>
+                            <a onClick={handleLogout}>ログアウト</a>
                         </li>
                     </ul>
                 </nav>
