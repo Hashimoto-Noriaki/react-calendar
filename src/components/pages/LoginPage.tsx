@@ -2,7 +2,7 @@ import { ChangeEvent,FormEvent,useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PrimaryBtn } from '../atoms/PrimaryBtn'
 import { Input } from '../atoms/Input'
-import { LoginInfoType } from '../../types/loginInfoType'
+import { LoginInfoType } from '../../types/login'
 import { login } from '../../api/login'
 import { useLoginUser } from '../../hooks/useLoginUser'
 
