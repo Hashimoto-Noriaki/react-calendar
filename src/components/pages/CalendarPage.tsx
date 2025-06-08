@@ -1,8 +1,24 @@
-import { getMonth } from "date-fns";
+import { eachWeekOfInterval,eachDayOfInterval,getDate,getMonth,startOfMonth,endOfWeek,endOfMonth } from "date-fns";
 import { DAYS_LIST } from "../../constants/calendar";
+import { useEffect,useState } from "react";
 
 export const CalendarPage = () => {
   const today = new Date()
+  const [dateList,setDateList] = useState<Date[][]>([]);
+
+  useEffect(() => {
+    const monthOfSundayList = eachWeekOfInterval({
+      start: startOfMonth(today),
+      end: endOfMonth(today)
+    })
+    const newDateList: Date[][] = monthOfSundayList.map((date)=> {
+      return eachDayOfInterval({
+        start: date,
+        end: endOfWeek(date),
+      })
+    })
+    setDateList(newDateList);
+  },[])
 
   return (
     <>
@@ -18,6 +34,22 @@ export const CalendarPage = () => {
               ))}
             </tr>
           </thead>
+          <tbody>
+              {dateList.map((oneWeek) => (
+                <tr key={`week-${getDate(oneWeek[0])}`} className="mx-10">
+                  {oneWeek.map((item)=> (
+                    <td 
+                      key={`day-${getDate(item)}`}
+                      className="bg-white h-[10vh] border-lime-800 border-2 border-solid"
+                    >
+                      <span className="inline-block w-[20%] leading-[20%] text-center">
+                        {getDate(item)}
+                      </span>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+          </tbody>
         </table>
       </div>
     </>
