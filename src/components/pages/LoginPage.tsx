@@ -1,8 +1,14 @@
 import { ChangeEvent,FormEvent,useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../api/login";
+import { LoginInfoType } from "../../types/login";
 import { PrimaryBtn } from "../atoms/PrimaryBtn";
 import { Input } from "../atoms/Input";
+import { useLoginUser } from "../../hooks/useLoginUser";
 
 export const LoginPage = () => {
+    const navigate = useNavigate();
+    const { setLoginUser }  = useLoginUser();
     const [loginInfo, setLoginInfo] = useState<LoginInfoType>({
         email: "",
         password: ""
@@ -19,7 +25,9 @@ export const LoginPage = () => {
         e.preventDefault();
         setErrorMessage("");
         try {
-            login(setLoginInfo);
+            const resUser = login(loginInfo);
+            setLoginUser({id: resUser.id, name: resUser.name})
+            navigate('/calendar');
         } catch {
             setErrorMessage("ログインに失敗しました。");
         }
@@ -44,7 +52,7 @@ export const LoginPage = () => {
                 </div>
                 <div className="w-[80%]">
                     <Input 
-                        password="password"
+                        name="password"
                         placeholder="パスワード"
                         value={loginInfo.password}
                         onChange={changeLoginInfo}
