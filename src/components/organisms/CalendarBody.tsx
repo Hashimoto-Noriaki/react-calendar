@@ -1,9 +1,10 @@
 import { getDate } from "date-fns";
 import { dateColor } from "../../libs/date";
+import { DateList } from "../../types/calendar";
 
 type PropsType = {
     currentDate: Date;
-    zdateList: Date[][];
+    dateList: DateList;
 }
 
 export const CalendarBody = ({ currentDate,dateList }: PropsType) => {
@@ -13,16 +14,16 @@ export const CalendarBody = ({ currentDate,dateList }: PropsType) => {
                 <tr key={`week-${getDate(oneWeek[0])}`} className="mx-10">
                     {oneWeek.map((item)=> (
                         <td 
-                            key={`day-${getDate(oneWeek[0])}`}
+                            key={`day-${getDate(oneWeek[0].date)}`}
                             className="bg-white h-[10vh] border-lime-800 border-2 border-solid"
                         >
                             <span
                                 className={`inline-block w-[20px] leading-[20px] text-center ${dateColor(
-                                    item,
+                                    item.date,
                                     currentDate
                                 )}`}
                             >
-                                {getDate(item)}
+                                {getDate(item.date)}
                             </span>
                         </td>
                     ))}
