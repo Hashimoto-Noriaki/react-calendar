@@ -1,4 +1,4 @@
-import { eachDayOfInterval, eachWeekOfInterval, endOfMonth, endOfWeek, getMonth, startOfMonth,isSameDay } from "date-fns";
+import { eachDayOfInterval, eachWeekOfInterval, endOfMonth, endOfWeek, getMonth, startOfMonth, isSameDay } from "date-fns";
 import { useEffect, useState } from "react";
 import { CalendarHeader } from "../organisms/CalendarHeader";
 import { CalendarBody } from "../organisms/CalendarBody";
@@ -18,27 +18,26 @@ export const CalendarPage = () => {
       return eachDayOfInterval({
         start: date,
         end: endOfWeek(date),
-      }).map((date)=> ({ date,schedules: [] as Schedule[]}));
-    })
+      }).map((date) => ({ date, schedules: [] as Schedule[] }))
+    });
 
-    const scheduleList = getScheduleList();
-    scheduleList.forEach((schedule)=> {
-      const firstIndex = newDateList.findIndex((oneWeek)=> 
-        oneWeek.some((item)=> isSameDay(item.date, schedule.date))
-      )
-      if(firstIndex !== -1) return;
-      const secondIndex = newDateList[firstIndex].findIndex((item)=> 
-        isSameDay(item.date, schedule.date)
-      )
+    const scheduleList = getScheduleList()
+    scheduleList.forEach((schedule) => {
+      const firstIndex = newDateList.findIndex((oneWeek) =>{
+        return oneWeek.some((item) => isSameDay(item.date, schedule.date))
+      })
+      if (firstIndex === -1) return;
+      const secondIndex = newDateList[firstIndex].findIndex((item) => {
+        return isSameDay(item.date, schedule.date)
+      })
 
       newDateList[firstIndex][secondIndex].schedules = [
         ...newDateList[firstIndex][secondIndex].schedules,
         schedule,
-      ];
-    });
+      ]
+    })
     setDateList(newDateList)
   }, [])
-
 
   return (
     <>
