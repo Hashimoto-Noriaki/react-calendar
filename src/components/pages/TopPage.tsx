@@ -1,14 +1,14 @@
+import { useNavigate } from 'react-router-dom'
 import { PrimaryBtn } from '../atoms/PrimaryBtn'
 
 export const TopPage = () => {
+    const navigate = useNavigate()
     return (
         <div className="text-center">
             <h1 className="logo text-7xl">スケジュール管理APP</h1>
             <p className="text-5xl pt-[10vh]">スケジュールを管理します。</p>
             <div className="pt-[20vh]">
-                <PrimaryBtn>
-                    ログイン
-                </PrimaryBtn>
+                <PrimaryBtn onClick={()=> navigate("/login")}>ログイン</PrimaryBtn>
             </div>
         </div>
     )
