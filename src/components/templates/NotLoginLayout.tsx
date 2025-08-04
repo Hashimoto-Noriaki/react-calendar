@@ -1,10 +1,6 @@
-import { ReactNode } from 'react'
+import { Outlet } from 'react-router-dom'
 
-type PropsType = {
-    children:ReactNode;
-}
-
-export const NotLoginLayout = ({children}: PropsType) => {
+export const NotLoginLayout = () => {
     return (
         <div className="ralative">
             <header className="fixed leading-[50px] bg-white top-0 right-0 left-0">
@@ -19,7 +15,7 @@ export const NotLoginLayout = ({children}: PropsType) => {
                 </div>
             </header>
             <main className="pt-[50px] bg-gradient-to-r from-lime-100 to-lime-200 h-screen flex flex-col justify-center items-center">
-                {children}
+                <Outlet/>
             </main>
         </div>
     )

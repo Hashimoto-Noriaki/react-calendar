@@ -1,8 +1,15 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { TopPage } from '../src/components/pages/TopPage'
-import { LoginPage } from '../src/components/pages/LoginPage'
+import { TopPage } from './components/pages/TopPage'
+import { LoginPage } from './components/pages/LoginPage'
+import { NotLoginLayout } from './components/templates/NotLoginLayout'
 
 export const router = createBrowserRouter([
-    {path:"/",element:<TopPage/>},
-    {path:"/login",element:<LoginPage/>}
+    {
+        path:"/",
+        element:<NotLoginLayout/>,
+        children:[
+            {path:"/",element:<TopPage/>},
+            {path:"/login",element:<LoginPage/>}
+        ]
+    }
 ])
